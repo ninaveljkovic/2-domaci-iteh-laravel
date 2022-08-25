@@ -27,6 +27,11 @@ Route::get("/frizure/{id}",[FrizuraController::class,'show']);
 
 Route::get("/termini",[TerminController::class,'index']);
 Route::get("/termini/{id}",[TerminController::class,'show']);
+Route::post("/termini",[TerminController::class,'store']);
+Route::put("/termini/{id}",[TerminController::class,'update']);
+Route::delete("/termini/{id}",[TerminController::class,'destroy']);
+
+
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TerminResource;
 use App\Models\Termin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TerminController extends Controller
 {
@@ -34,9 +35,27 @@ class TerminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request)//post
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'frizer_id' => 'required',
+            'frizura_id' => 'required',
+            'datum' => 'required|string', 
+            'vreme' => 'required|string',
+          
+             
+        ]);
+
+        if ($validator->fails()) 
+            return response()->json($validator->errors());
+        $t = Termin::create([
+            'frizer_id' => $request->frizer_id, 
+            'frizura_id' => $request->frizura_id, 
+            'datum' => $request->datum,
+            'vreme' => $request->vreme, 
+        ]);
+        $t->save();
+        return response()->json(['Termin kreiran!', new TerminResource($t)]);
     }
 
     /**
@@ -68,9 +87,35 @@ class TerminController extends Controller
      * @param  \App\Models\Termin  $termin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Termin $termin)
+    public function update(Request $request,$id) //put
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'frizer_id' => '',
+            'frizura_id' => '',
+            'datum' => 'string', 
+            'vreme' => 'string',
+          
+             
+        ]);
+
+        if ($validator->fails()) 
+            return response()->json($validator->errors());
+
+        $t = Termin::find($id);
+
+        if($t){
+            $t->frizer_id=$request->frizer_id;
+            $t->frizura_id=$request->frizura_id;
+            $t->datum=$request->datum;
+            $t->vreme=$request->vreme; 
+
+            $t->save();
+            return response()->json(['Uspesno izmenjeno!',new TerminResource($t)]);
+
+        }else{
+            return response()->json('Trazeni objekat ne postoji u bazi');
+
+        }
     }
 
     /**
@@ -79,8 +124,15 @@ class TerminController extends Controller
      * @param  \App\Models\Termin  $termin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Termin $termin)
+    public function destroy( $id)//delete
     {
-        //
+        $t = Termin::find($id);
+        if($t ){
+            $t ->delete();
+            return response()->json(['Uspesno obrisano!', new TerminResource($t)]);
+        
+        }
+           
+       return response()->json('Trazeni objekat ne postoji u bazi');
     }
 }
