@@ -14,7 +14,9 @@ class FrizuraFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'naziv' => $this->faker->firstName(), 
+            'vreme' =>  $this->faker->numberBetween($min = 10, $max = 240),
+            
         ];
     }
 }
