@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TerminResource;
 use App\Models\Termin;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class TerminController extends Controller
      */
     public function index()
     {
-        return Termin::all();
+        return TerminResource::collection(Termin::all());
     }
 
     /**
@@ -46,7 +47,7 @@ class TerminController extends Controller
      */
     public function show($id)
     {
-        return Termin::find($id);
+        return new TerminResource(Termin::find($id));
     }
 
     /**
