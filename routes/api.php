@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AutfController;
 use App\Http\Controllers\FrizerController;
 use App\Http\Controllers\FrizuraController;
 use App\Http\Controllers\TerminController;
@@ -25,16 +26,22 @@ Route::get("/frizure",[FrizuraController::class,'index']);
 Route::get("/frizure/{id}",[FrizuraController::class,'show']);
 
 
-Route::get("/termini",[TerminController::class,'index']);
-Route::get("/termini/{id}",[TerminController::class,'show']);
-Route::post("/termini",[TerminController::class,'store']);
-Route::put("/termini/{id}",[TerminController::class,'update']);
-Route::delete("/termini/{id}",[TerminController::class,'destroy']);
+
+
+Route::post("/login",[AutfController::class,'login']);
+Route::post("/register",[AutfController::class,'register']);
 
 
 
 
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get("/termini",[TerminController::class,'index']);
+    Route::get("/termini/{id}",[TerminController::class,'show']);
+    Route::post("/termini",[TerminController::class,'store']);
+    Route::put("/termini/{id}",[TerminController::class,'update']);
+    Route::delete("/termini/{id}",[TerminController::class,'destroy']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+    Route::post("/logout",[AutfController::class,'logout']);
 });
