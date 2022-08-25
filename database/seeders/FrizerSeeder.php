@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Frizer;
 use Illuminate\Database\Seeder;
 
 class FrizerSeeder extends Seeder
@@ -13,6 +14,6 @@ class FrizerSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Frizer::factory(10)->create();
     }
 }
