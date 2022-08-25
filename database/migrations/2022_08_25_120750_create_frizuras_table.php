@@ -15,6 +15,9 @@ class CreateFrizurasTable extends Migration
     {
         Schema::create('frizuras', function (Blueprint $table) {
             $table->id();
+            $table->string('naziv');
+            $table->integer('vreme');
+
             $table->timestamps();
         });
     }

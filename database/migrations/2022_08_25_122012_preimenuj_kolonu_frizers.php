@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTerminsTable extends Migration
+class PreimenujKolonuFrizers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateTerminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('termins', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('frizer_id');
-            $table->foreignId('frizura_id');
-            $table->string('datum');
-            $table->string('vreme');
-
-            $table->timestamps();
+        Schema::table('frizers', function (Blueprint $table) {
+            $table->renameColumn('godine','godine_iskustva');
+             
         });
     }
 
@@ -31,6 +26,9 @@ class CreateTerminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('termins');
+        Schema::table('frizers', function (Blueprint $table) {
+            $table->renameColumn('godine_iskustva','godine');
+             
+        });
     }
 }

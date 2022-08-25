@@ -15,6 +15,11 @@ class CreateFrizersTable extends Migration
     {
         Schema::create('frizers', function (Blueprint $table) {
             $table->id();
+            $table->string('ime');
+            $table->string('prezime');
+            $table->integer('godine');
+            $table->integer('rang'); 
+            $table->string('kontakt'); 
             $table->timestamps();
         });
     }
